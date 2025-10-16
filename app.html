@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suma de Señales Senoidales</title>
+
+  <!-- Plotly para gráficos interactivos -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="controls">
+    <h2>Suma de Senoidales</h2>
+
+    <!-- Controles de parámetros -->
+    <label>Amplitud</label>
+    <input type="range" id="amplitud" min="0" max="5" step="0.1" value="1">
+    <span id="ampVal">1</span>
+
+    <label>Frecuencia (Hz)</label>
+    <input type="range" id="frecuencia" min="1" max="20" step="0.5" value="5">
+    <span id="freqVal">5</span>
+
+    <label>Fase (rad)</label>
+    <input type="range" id="fase" min="0" max="6.28" step="0.1" value="0">
+    <span id="faseVal">0</span>
+
+    <!-- Botones principales -->
+    <button id="addSignal">➕ Añadir señal</button>
+    <button id="clear">🧹 Limpiar todas</button>
+
+    <!-- Control de número de períodos -->
+    <label>Número de períodos a mostrar</label>
+    <input type="range" id="periodos" min="1" max="10" step="1" value="2">
+    <span id="periodosVal">2</span>
+
+    <button id="animate">▶️ Animar suma</button>
+
+    <!-- Lista de señales -->
+    <h3>Señales añadidas:</h3>
+    <select id="signalSelector" size="5" style="width:100%; margin-bottom:10px;"></select>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <button id="deleteSignal" style="background-color:#d9534f;">🗑️ Eliminar señal seleccionada</button>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div id="plots">
+    <div id="individual"></div>
+    <div id="suma"></div>
+  </div>
+
+  <!-- Lógica de la app -->
+  <script src="app.js"></script>
+</body>
+</html>
