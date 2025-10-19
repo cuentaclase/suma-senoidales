@@ -1,63 +1,168 @@
+/* ======== ESTILOS GENERALES ======== */
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f5f6fa;
+  color: #222;
   margin: 0;
+  padding: 0;
   display: flex;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #f7f8fa;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Panel lateral de controles */
+/* ======== SECCIÓN DE PRESENTACIÓN ======== */
+#intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  height: 100vh;
+  box-sizing: border-box;
+  background: linear-gradient(145deg, #1d2b64, #f8cdda);
+  color: white;
+}
+
+#intro h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+#intro p {
+  max-width: 600px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+#startApp {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#startApp:hover {
+  background-color: #0056b3;
+}
+
+/* ======== CONTENEDOR PRINCIPAL ======== */
+#app {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+/* ======== PANEL DE CONTROLES ======== */
 #controls {
-  width: 280px;
-  background: #fff;
-  padding: 15px;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-  overflow-y: auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  flex: 1 1 280px;
+  max-width: 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 #controls h2 {
-  font-size: 18px;
-  margin-top: 0;
+  text-align: center;
+  margin-bottom: 0.8rem;
 }
 
-label {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
+#controls label {
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
-input[type=number],
-input[type=range] {
+#controls input[type="range"] {
   width: 100%;
-  margin: 5px 0 10px;
 }
 
-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 8px;
-  border: none;
-  border-radius: 6px;
-  background-color: #0078d4;
+#controls button {
+  background-color: #007bff;
   color: white;
-  font-size: 15px;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem;
   cursor: pointer;
-  transition: 0.2s;
+  font-size: 1rem;
+  transition: background-color 0.2s;
 }
 
-button:hover {
-  background-color: #005ea8;
+#controls button:hover {
+  background-color: #0056b3;
 }
 
+#deleteSignal {
+  background-color: #dc3545 !important;
+}
+
+#deleteSignal:hover {
+  background-color: #a71d2a !important;
+}
+
+/* ======== PANEL DE GRÁFICOS ======== */
 #plots {
-  flex: 1;
+  flex: 3 1 500px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  padding: 10px;
+  gap: 1rem;
+  box-sizing: border-box;
 }
 
-#individual, #suma {
-  height: 45%;
+#individual,
+#suma {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+  #app {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #controls {
+    max-width: 100%;
+  }
+
+  #plots {
+    flex: 1 1 auto;
+  }
+
+  #intro h1 {
+    font-size: 1.6rem;
+  }
+
+  #intro p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  #startApp {
+    width: 80%;
+    max-width: 250px;
+  }
+}
+
+@media (max-height: 500px) {
+  #intro {
+    height: auto;
+    padding: 1rem;
+  }
 }

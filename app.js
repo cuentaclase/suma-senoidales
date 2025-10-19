@@ -1,9 +1,22 @@
+// === Pantalla de presentación ===
+const intro = document.getElementById("intro");
+const app = document.getElementById("app");
+const startBtn = document.getElementById("startApp");
+
+if (startBtn) {
+  startBtn.onclick = () => {
+    intro.style.display = "none";
+    app.style.display = "flex";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+}
+
 // === Variables globales ===
 let signals = [];
 let t = [];
 const N = 1000;
 let selectedIndex = -1;
-let fixedYRange = [-5, 5]; // rango vertical inicial fijo
+let fixedYRange = [-5, 5];
 
 // === Referencias a elementos del DOM ===
 const ampSlider = document.getElementById("amplitud");
@@ -49,7 +62,7 @@ periodosSlider.oninput = () => {
   drawAll();
 };
 
-// === Botones principales ===
+// === Botones ===
 document.getElementById("addSignal").onclick = () => {
   const A = parseFloat(ampSlider.value);
   const f = parseFloat(freqSlider.value);
@@ -68,7 +81,6 @@ document.getElementById("clear").onclick = () => {
   drawAll();
 };
 
-// === Eliminar señal seleccionada ===
 deleteBtn.onclick = () => {
   if (selectedIndex < 0 || signals.length === 0) return;
   signals.splice(selectedIndex, 1);
@@ -77,7 +89,6 @@ deleteBtn.onclick = () => {
   drawAll();
 };
 
-// === Seleccionar señal existente ===
 signalSelector.onchange = () => {
   selectedIndex = signalSelector.selectedIndex;
   if (selectedIndex >= 0) {
@@ -91,7 +102,6 @@ signalSelector.onchange = () => {
   }
 };
 
-// === Actualiza la lista de señales ===
 function updateSignalSelector() {
   signalSelector.innerHTML = "";
   signals.forEach((s, i) => {
@@ -101,7 +111,6 @@ function updateSignalSelector() {
   });
 }
 
-// === Función principal de dibujo ===
 function drawAll() {
   if (signals.length === 0) {
     Plotly.purge("individual");
@@ -109,12 +118,10 @@ function drawAll() {
     return;
   }
 
-  // Eje temporal fijo → duración = nPer segundos (referencia 1 Hz)
   const nPer = parseFloat(periodosSlider.value);
   const dur = nPer;
   t = Array.from({ length: N }, (_, i) => i * dur / N);
 
-  // Cálculo de las señales individuales y suma
   let total = Array(N).fill(0);
   const traces = signals.map((s, idx) => {
     const y = t.map(x => s.A * Math.sin(2 * Math.PI * s.f * x + s.phi));
@@ -128,26 +135,18 @@ function drawAll() {
     };
   });
 
-  // Ajustar rango Y si alguna señal supera el límite actual
   const currentMaxAmp = Math.max(...signals.map(s => s.A));
   if (currentMaxAmp > Math.abs(fixedYRange[0]) || currentMaxAmp > Math.abs(fixedYRange[1])) {
     fixedYRange = [-1.2 * currentMaxAmp, 1.2 * currentMaxAmp];
   }
 
-  // === Gráfica de señales individuales ===
   Plotly.newPlot("individual", traces, {
     title: "Señales individuales",
     margin: { t: 30 },
-    showlegend: true,
     xaxis: { title: "Tiempo (s)" },
-    yaxis: {
-      title: "Amplitud",
-      range: fixedYRange,
-      fixedrange: true
-    }
+    yaxis: { title: "Amplitud", range: fixedYRange, fixedrange: true }
   });
 
-  // === Gráfica de la señal resultante ===
   Plotly.newPlot("suma", [{
     x: t,
     y: total,
@@ -155,18 +154,13 @@ function drawAll() {
     line: { color: "black", width: 3 },
     name: "Suma total"
   }], {
-    title: "Señal resultante (suma de senoidales)",
+    title: "Señal resultante",
     margin: { t: 30 },
     xaxis: { title: "Tiempo (s)" },
-    yaxis: {
-      title: "Amplitud",
-      range: fixedYRange,
-      fixedrange: true
-    }
+    yaxis: { title: "Amplitud", range: fixedYRange, fixedrange: true }
   });
 }
 
-// === Animación paso a paso ===
 document.getElementById("animate").onclick = () => {
   if (signals.length === 0) return;
 
